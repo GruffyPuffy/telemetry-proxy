@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * File Name          : freertos.c
-  * Date               : 22/02/2015 20:11:01
+  * Date               : 22/02/2015 21:21:37
   * Description        : Code for freertos applications
   ******************************************************************************
   *
@@ -43,13 +43,17 @@
 
 /* Variables -----------------------------------------------------------------*/
 osThreadId defaultTaskHandle;
+osThreadId outputTaskHandle;
+osThreadId inputTaskHandle;
 
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
 
 /* Function prototypes -------------------------------------------------------*/
-void StartDefaultTask(void const * argument);
+void DefaultTaskFunction(void const * argument);
+void OutputTaskFunction(void const * argument);
+void InputTaskFunction(void const * argument);
 
 /* USER CODE BEGIN FunctionPrototypes */
 
@@ -77,8 +81,16 @@ void MX_FREERTOS_Init() {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, DefaultTaskFunction, osPriorityNormal, 0, 64);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of outputTask */
+  osThreadDef(outputTask, OutputTaskFunction, osPriorityNormal, 0, 64);
+  outputTaskHandle = osThreadCreate(osThread(outputTask), NULL);
+
+  /* definition and creation of inputTask */
+  osThreadDef(inputTask, InputTaskFunction, osPriorityNormal, 0, 64);
+  inputTaskHandle = osThreadCreate(osThread(inputTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -87,6 +99,30 @@ void MX_FREERTOS_Init() {
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
+}
+
+/* OutputTaskFunction function */
+void OutputTaskFunction(void const * argument)
+{
+  /* USER CODE BEGIN OutputTaskFunction */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END OutputTaskFunction */
+}
+
+/* InputTaskFunction function */
+void InputTaskFunction(void const * argument)
+{
+  /* USER CODE BEGIN InputTaskFunction */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END InputTaskFunction */
 }
 
 /* USER CODE BEGIN Application */

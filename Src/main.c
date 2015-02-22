@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * File Name          : main.c
-  * Date               : 22/02/2015 20:11:03
+  * Date               : 22/02/2015 21:21:38
   * Description        : Main program body
   ******************************************************************************
   *
@@ -41,6 +41,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "usbd_cdc_if.h"
+#include "blackboard.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -90,9 +91,9 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-  
+
   /* We should never get here as control is now taken by the scheduler */
-  
+
 
   /* USER CODE BEGIN 3 */
   /* Infinite loop */
@@ -140,26 +141,31 @@ void SystemClock_Config(void)
 
 /* USER CODE END 4 */
 
-void StartDefaultTask(void const * argument)
+void DefaultTaskFunction(void const * argument)
 {
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
 
   /* USER CODE BEGIN 5 */
+  bbInit();
+
+  bbLock();
+  theBlackboard.allSystemsGo = 1;
+  bbUnlock();
 
   /* Infinite loop */
   for(;;)
   {
     osDelay(1000);
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-    uint8_t str[] = "Hello World\r\n";
-    CDC_Transmit_FS(str, sizeof(str));
+    //uint8_t str[] = "Hello World\r\n";
+    //CDC_Transmit_FS(str, sizeof(str));
   }
 
-  /* USER CODE END 5 */ 
+  /* USER CODE END 5 */
 
 }
- 
+
 
 #ifdef USE_FULL_ASSERT
 
@@ -183,10 +189,10 @@ void assert_failed(uint8_t* file, uint32_t line)
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-*/ 
+*/
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

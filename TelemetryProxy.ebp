@@ -263,6 +263,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Inc\FreeRTOSConfig.h" />
+		<Unit filename="Inc\blackboard.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="Inc\gpio.h" />
 		<Unit filename="Inc\stm32f1xx_hal_conf.h" />
 		<Unit filename="Inc\stm32f1xx_it.h" />
@@ -333,6 +336,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="STM32F103C8_FLASH.ld" />
+		<Unit filename="Src\blackboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Src\exception_handler.c">
 			<Option compilerVar="CC" />
 		</Unit>
